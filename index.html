@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover" />
+  <meta name="theme-color" content="#170410" />
+  <title>For You, Douae ♡</title>
+
+  <!-- خطوط أنيقة من Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400&family=Great+Vibes&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- طبقة الأجواء: نجوم، أضواء، قمر -->
+  <div class="sky" id="sky" aria-hidden="true"></div>
+  <div class="moon" aria-hidden="true"></div>
+  <div class="petals" id="petals" aria-hidden="true"></div>
+
+  <main class="stage">
+    <!-- هنا يبني الجافاسكربت الباقة كـ SVG -->
+    <div class="bouquet" id="bouquet"></div>
+
+    <!-- الرسالة النهائية -->
+    <footer class="message" id="message" dir="ltr">
+      <h1 id="messageTitle">For You, Douae <span class="heart">♡</span></h1>
+      <p id="messageSub">A little bouquet, made just for you.</p>
+    </footer>
+  </main>
+
+  <!-- زر البداية -->
+  <div class="intro" id="intro">
+    <button class="tap" id="tap" type="button">Tap to bloom</button>
+  </div>
+
+  <script src="script.js" defer></script>
+</body>
+</html>

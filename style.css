@@ -1,0 +1,272 @@
+/* =====================================================
+   باقة ورد رقمية — التنسيقات
+   الألوان والقياسات كلها هنا ليسهل تعديلها لاحقاً
+   ===================================================== */
+
+:root {
+  --bg-deep:   #120309;   /* أغمق نقطة في الخلفية */
+  --bg-mid:    #2a0718;   /* برغندي داكن */
+  --bg-warm:   #45102c;   /* توهج بنفسجي/خمري */
+  --ivory:     #f7e7d8;   /* لون النص الأساسي */
+  --gold:      #e3bb86;   /* لمسة ذهبية خفيفة */
+  --glow:      rgba(255, 205, 190, 0.85);
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow: hidden;              /* لا تمرير أفقي ولا عمودي */
+  background: var(--bg-deep);
+  -webkit-tap-highlight-color: transparent;
+}
+
+body {
+  font-family: "Cormorant Garamond", Georgia, serif;
+  color: var(--ivory);
+  /* تدرّجات متراكبة تعطي عمقاً للخلفية */
+  background:
+    radial-gradient(120% 80% at 50% 108%, var(--bg-warm) 0%, transparent 62%),
+    radial-gradient(90% 60% at 18% 6%, #3a0b26 0%, transparent 55%),
+    radial-gradient(70% 50% at 88% 18%, #240a2e 0%, transparent 60%),
+    linear-gradient(180deg, var(--bg-deep) 0%, var(--bg-mid) 100%);
+  animation: fadeInBg 1.6s ease both;
+}
+
+@keyframes fadeInBg { from { opacity: 0; } to { opacity: 1; } }
+
+/* ---------- القمر والهالة ---------- */
+.moon {
+  position: fixed;
+  top: 7vh; right: 12vw;
+  width: 64px; height: 64px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 36% 34%, #fff4e6 0%, #f1d7bd 45%, #d8ae90 100%);
+  box-shadow: 0 0 40px 12px rgba(255, 226, 196, 0.16),
+              0 0 120px 50px rgba(255, 200, 170, 0.08);
+  opacity: 0.55;
+  animation: fadeInBg 3s ease both;
+  pointer-events: none;
+}
+
+/* ---------- النجوم والجزيئات ---------- */
+.sky { position: fixed; inset: 0; pointer-events: none; }
+
+.sky .star {
+  position: absolute;
+  border-radius: 50%;
+  background: var(--glow);
+  opacity: 0;
+  animation: twinkle var(--dur, 5s) ease-in-out var(--del, 0s) infinite;
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.05; transform: translateY(0) scale(0.7); }
+  50%      { opacity: var(--max, 0.8); transform: translateY(-14px) scale(1); }
+}
+
+.sky .bokeh {
+  position: absolute;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(255,190,200,0.5) 0%, rgba(255,150,170,0) 70%);
+  filter: blur(2px);
+  animation: drift var(--dur, 22s) linear var(--del, 0s) infinite;
+}
+
+@keyframes drift {
+  0%   { transform: translate(0, 0); opacity: 0; }
+  15%  { opacity: 0.7; }
+  85%  { opacity: 0.5; }
+  100% { transform: translate(var(--dx, 40px), -70vh); opacity: 0; }
+}
+
+/* ---------- المسرح ---------- */
+.stage {
+  position: relative;
+  height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: env(safe-area-inset-top) 0 env(safe-area-inset-bottom);
+}
+
+.bouquet {
+  flex: 1 1 auto;
+  min-height: 0;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.bouquet svg { width: 100%; height: 100%; display: block; overflow: visible; }
+
+/* ---------- الرسالة النهائية ---------- */
+.message {
+  flex: 0 0 auto;
+  text-align: center;
+  padding: 0 24px 34px;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity 1.8s ease, transform 1.8s ease;
+}
+
+.message.show { opacity: 1; transform: translateY(0); }
+
+.message h1 {
+  font-family: "Great Vibes", "Cormorant Garamond", cursive;
+  font-weight: 400;
+  font-size: clamp(2.1rem, 9vw, 3.4rem);
+  line-height: 1.15;
+  margin: 0 0 6px;
+  color: #fdeee0;
+  text-shadow: 0 0 22px rgba(255, 190, 170, 0.35);
+}
+
+.message .heart {
+  color: #ff8fa6;
+  text-shadow: 0 0 18px rgba(255, 120, 150, 0.6);
+  display: inline-block;
+  animation: beat 2.6s ease-in-out infinite;
+}
+
+@keyframes beat {
+  0%, 100% { transform: scale(1); }
+  45%      { transform: scale(1.16); }
+}
+
+.message p {
+  margin: 0;
+  font-size: clamp(0.95rem, 3.8vw, 1.15rem);
+  font-style: italic;
+  letter-spacing: 0.02em;
+  color: rgba(247, 231, 216, 0.72);
+}
+
+/* ---------- زر البداية ---------- */
+.intro {
+  position: fixed;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  background: rgba(10, 2, 8, 0.45);
+  backdrop-filter: blur(2px);
+  transition: opacity 0.7s ease;
+  z-index: 5;
+}
+
+.intro.hide { opacity: 0; pointer-events: none; }
+
+.tap {
+  font-family: inherit;
+  font-size: clamp(1.05rem, 4.6vw, 1.3rem);
+  letter-spacing: 0.06em;
+  color: var(--ivory);
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(227, 187, 134, 0.55);
+  border-radius: 999px;
+  padding: 14px 34px;
+  cursor: pointer;
+  box-shadow: 0 0 34px rgba(227, 187, 134, 0.14);
+  animation: pulse 3.4s ease-in-out infinite;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.tap:hover, .tap:focus-visible { background: rgba(255, 255, 255, 0.1); }
+.tap:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+.tap:active { transform: scale(0.97); }
+
+@keyframes pulse {
+  0%, 100% { box-shadow: 0 0 26px rgba(227, 187, 134, 0.12); }
+  50%      { box-shadow: 0 0 46px rgba(227, 187, 134, 0.3); }
+}
+
+/* =====================================================
+   حركات الباقة
+   ===================================================== */
+
+/* نمو الساق: نرسمها بخط متقطع ثم نزيح القطع تدريجياً */
+.stem {
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: var(--len);
+  stroke-dashoffset: var(--len);
+  animation: grow 1.5s ease-out var(--gd, 0s) forwards;
+}
+
+@keyframes grow { to { stroke-dashoffset: 0; } }
+
+/* تفتّح الزهرة: تبدأ صغيرة ثم تكبر مع دوران بسيط */
+.bloom {
+  transform-origin: 0px 0px;
+  transform: scale(0) rotate(-14deg);
+  opacity: 0;
+  animation: bloom 1s cubic-bezier(0.22, 0.9, 0.3, 1.25) var(--bd, 0s) forwards;
+}
+
+@keyframes bloom {
+  0%   { transform: scale(0) rotate(-14deg); opacity: 0; }
+  55%  { opacity: 1; }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+
+/* تمايل لطيف بعد اكتمال التفتّح */
+.sway {
+  transform-origin: 0px 0px;
+  animation: sway var(--sd, 5s) ease-in-out var(--sdl, 0s) infinite alternate;
+}
+
+@keyframes sway {
+  from { transform: rotate(-1.4deg) translateY(0.6px); }
+  to   { transform: rotate(1.4deg) translateY(-0.6px); }
+}
+
+/* الأوراق والغلاف */
+.leaf {
+  transform-origin: 0px 0px;
+  transform: scale(0);
+  animation: leafIn 0.7s cubic-bezier(0.22, 0.9, 0.3, 1.2) var(--ld, 0s) forwards;
+}
+
+@keyframes leafIn { to { transform: scale(1); } }
+
+.wrap {
+  opacity: 0;
+  animation: fadeInBg 1.2s ease var(--wd, 0s) forwards;
+}
+
+/* بتلات متساقطة بعد اكتمال الباقة */
+.petals { position: fixed; inset: 0; pointer-events: none; overflow: hidden; }
+
+.petals span {
+  position: absolute;
+  top: -6vh;
+  width: 10px; height: 12px;
+  border-radius: 60% 0 60% 0;
+  background: linear-gradient(140deg, #ff7f96, #a8102c);
+  opacity: 0;
+  animation: fall var(--dur, 12s) linear var(--del, 0s) infinite;
+}
+
+@keyframes fall {
+  0%   { transform: translate3d(0, 0, 0) rotate(0deg); opacity: 0; }
+  10%  { opacity: 0.85; }
+  100% { transform: translate3d(var(--dx, 30px), 112vh, 0) rotate(560deg); opacity: 0; }
+}
+
+/* ---------- شاشات أكبر ---------- */
+@media (min-width: 700px) {
+  .bouquet svg { max-width: 560px; margin: 0 auto; }
+  .moon { width: 88px; height: 88px; right: 16vw; }
+}
+
+/* ---------- احترام تفضيل تقليل الحركة ---------- */
+@media (prefers-reduced-motion: reduce) {
+  .stem, .bloom, .leaf, .wrap { animation-duration: 0.01ms !important; animation-delay: 0ms !important; }
+  .sway, .petals span, .sky .star, .sky .bokeh, .tap, .heart { animation: none !important; }
+  .stem { stroke-dashoffset: 0; }
+  .bloom { transform: scale(1); opacity: 1; }
+  .leaf { transform: scale(1); }
+  .wrap { opacity: 1; }
+}
